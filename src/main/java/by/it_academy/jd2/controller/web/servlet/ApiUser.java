@@ -1,9 +1,8 @@
-package by.it_academy.jd2.controller;
+package by.it_academy.jd2.controller.web.servlet;
 
 import by.it_academy.jd2.dto.UserDTO;
 import by.it_academy.jd2.model.ERole;
-import by.it_academy.jd2.service.LoginService;
-import by.it_academy.jd2.service.api.ILoginService;
+import by.it_academy.jd2.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,14 +16,12 @@ import java.time.LocalDate;
 @WebServlet(urlPatterns = "/api/user")
 public class ApiUser extends HttpServlet {
 
-    private final ILoginService loginService = LoginService.getInstance();
+    private final static UserService userService = UserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html; charset=UTF-8");
 
-        String html = "<!DOCTYPE html>" +
+        String regForm = "<!DOCTYPE html>" +
                 "<html lang=\"ru\">" +
                 "<head>" +
                 "    <meta charset=\"UTF-8\">" +
@@ -48,14 +45,12 @@ public class ApiUser extends HttpServlet {
                 "</html>";
 
         try (PrintWriter out = resp.getWriter()) {
-            out.write(html);
+            out.write(regForm);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html; charset=UTF-8");
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
@@ -64,7 +59,7 @@ public class ApiUser extends HttpServlet {
 
         try {
             UserDTO user = new UserDTO(login, password, fio, dateOfBirth, LocalDate.now(), ERole.USER);
-            loginService.create(user);
+            userService.create(user);
 
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().write("User registered successfully.");
