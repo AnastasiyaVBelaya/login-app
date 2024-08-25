@@ -4,12 +4,12 @@ import by.it_academy.jd2.dto.UserDTO;
 
 import java.util.Collection;
 
-public interface ILoginStorage {
+public interface IUserStorageMemory {
     void save(UserDTO user);
 
-    void update(UserDTO user);
+    //void update(UserDTO user);
 
-    void delete(String login);
+    //void delete(UserDTO user);
 
     UserDTO get(String login);
 
