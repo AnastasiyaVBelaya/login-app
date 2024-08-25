@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns = "https://jakarta.ee/xml/ns/jakartaee"
-         xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation = "https://jakarta.ee/xml/ns/jakartaee
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
         https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-         version = "6.0"
-         metadata-complete = "false">
+         version="6.0"
+         metadata-complete="false">
 
     <display-name>Приложение для регистрации</display-name>
 
-    <!--    <servlet>-->
-    <!--        <servlet-name>Hello1</servlet-name>-->
-    <!--        <servlet-class>by.it_academy.jd2.old.HelloWorldServlet</servlet-class>-->
-    <!--    </servlet>-->
+    <filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>by.it_academy.jd2.controller.web.filter.CharacterEncodingFilter</filter-class>
+    </filter>
 
-    <!--    <servlet-mapping>-->
-    <!--        <servlet-name>Hello1</servlet-name>-->
-    <!--        <url-pattern>/hello</url-pattern>-->
-    <!--    </servlet-mapping>-->
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 </web-app>
