@@ -1,9 +1,12 @@
-package by.it_academy.jd2.controller.web.filter;
+package by.it_academy.jd2.controller.filter;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
 
 import java.io.IOException;
 
+
+@WebFilter("/*")
 public class CharacterEncodingFilter implements Filter {
 
     @Override
