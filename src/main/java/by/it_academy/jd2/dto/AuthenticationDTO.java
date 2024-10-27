@@ -5,16 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO {
+public class AuthenticationDTO {
     private String login;
     private String password;
-    private String fio;
-    private LocalDate dateOfBirth;
 }
