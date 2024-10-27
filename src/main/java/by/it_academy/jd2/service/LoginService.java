@@ -1,35 +1,42 @@
 package by.it_academy.jd2.service;
 
-import by.it_academy.jd2.dto.UserDTO;
+import by.it_academy.jd2.dto.AuthenticationDTO;
+import by.it_academy.jd2.dto.UserSessionDTO;
+import by.it_academy.jd2.exceptions.InvalidCredentialsException;
+import by.it_academy.jd2.exceptions.UserNotFoundException;
 import by.it_academy.jd2.service.api.ILoginService;
-import by.it_academy.jd2.storage.UserStorageMemory;
+import by.it_academy.jd2.storage.api.IUserStorage;
+import by.it_academy.jd2.storage.entity.UserEntity;
 
 public class LoginService implements ILoginService {
 
-    private final static LoginService instance = new LoginService();
-    private final UserStorageMemory userStorage = UserStorageMemory.getInstance();
+    private final IUserStorage storage;
 
-    private LoginService() {
-    }
-    public boolean isPasswordValid(UserDTO user, String password) {
-        return user.getPassword().equals(password);
+    public LoginService(IUserStorage storage) {
+        this.storage = storage;
     }
 
     @Override
-    public UserDTO login(String login, String password) {
-        UserDTO user = userStorage.get(login);
-        if (user == null) {
-            throw new IllegalArgumentException("User with this login does not exist.");
-        }
-        if (!isPasswordValid(user, password)) {
-            throw new IllegalArgumentException("Invalid login or password.");
-        }
-
-        return user;
+    public boolean isPasswordValid(String rawPassword, String storedPassword) {
+        return rawPassword.equals(storedPassword);
     }
 
-    public static LoginService getInstance() {
-        return instance;
+    @Override
+    public UserSessionDTO authenticate(AuthenticationDTO authenticationDTO) {
+        UserEntity storedUser = storage.get(authenticationDTO.getLogin());
+        if (storedUser == null) {
+            throw new UserNotFoundException("Пользователь с таким логином не найден.");
+        }
+
+        if (!isPasswordValid(authenticationDTO.getPassword(), storedUser.getPassword())) {
+            throw new InvalidCredentialsException("Неверный логин или пароль.");
+        }
+
+        return UserSessionDTO.builder()
+                .login(storedUser.getLogin())
+                .fio(storedUser.getFio())
+                .dateOfBirth(storedUser.getDateOfBirth())
+                .role(storedUser.getRole())
+                .build();
     }
 }
-

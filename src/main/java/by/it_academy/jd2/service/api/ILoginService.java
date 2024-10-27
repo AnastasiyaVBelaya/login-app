@@ -1,10 +1,11 @@
 package by.it_academy.jd2.service.api;
 
-import by.it_academy.jd2.dto.UserDTO;
+import by.it_academy.jd2.dto.AuthenticationDTO;
+import by.it_academy.jd2.dto.UserSessionDTO;
 
 public interface ILoginService {
 
-    boolean isPasswordValid(UserDTO user, String password);
+    boolean isPasswordValid(String rawPassword, String storedPassword);
 
-    UserDTO login(String login, String password);
+    UserSessionDTO authenticate(AuthenticationDTO authenticationDTO);
 }
