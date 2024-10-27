@@ -1,19 +1,15 @@
 package by.it_academy.jd2.service.api;
 
 import by.it_academy.jd2.dto.UserDTO;
+import by.it_academy.jd2.dto.UserSessionDTO;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface IUserService {
-    void create(UserDTO user);
-
-    //void update(UserDTO user);
-
-    //void delete(UserDTO user);
+    UserSessionDTO create(UserDTO user);
 
     UserDTO get(String login);
 
-    Collection<UserDTO> getAll();
+    List<UserDTO> get();
 
-    boolean userExists(String login);
 }
